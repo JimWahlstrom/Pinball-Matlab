@@ -4,7 +4,7 @@ function plot_figure(time, x, Vx, Ax, y, Vy, Ay)
 
 
 % Seven plots in one figure                                            
-tiledlayout(3,3)
+tiledlayout('flow')
 %(1,1)
 nexttile
 plot(time, x,':')
@@ -46,6 +46,7 @@ nexttile
 plot(x, y,'-')
 xlabel('x-coordinate') 
 ylabel('y-coordinate')
+axis([-1 4, -1 6])
 
 end
 

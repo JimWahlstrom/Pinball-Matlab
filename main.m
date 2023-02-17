@@ -1,12 +1,13 @@
-clf
-
+clc
+clear variables
+close all
 % Description of the system
 % A simulation of a physical system that depicts a simple object the size of a pinball 
 % being launched by a spring. 
 
 % SIMULATION PROPERTIES
 n = 0.0001; % Step-size                                            
-tf = 3; % Simulation time
+tf = 7; % Simulation time
 
 
 % PHYSICAL PROPERTIES
@@ -84,5 +85,6 @@ for k = 2:(tf/n)
 end
 
 % Plot figures
-plot_figure(time, x, Vx, Ax, y, Vy, Ay);
+%plot_figure(time, x, Vx, Ax, y, Vy, Ay);
+plot_animated(time, x, Vx, Ax, y, Vy, Ay);
 
