@@ -85,6 +85,6 @@ for k = 2:(tf/n)
 end
 
 % Plot figures
-%plot_figure(time, x, Vx, Ax, y, Vy, Ay);
-plot_animated(time, x, Vx, Ax, y, Vy, Ay);
+plot_figure(time, x, Vx, Ax, y, Vy, Ay);
+%plot_animated(time, x, Vx, Ax, y, Vy, Ay);
 
