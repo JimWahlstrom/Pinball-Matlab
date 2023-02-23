@@ -1,10 +1,11 @@
 function plot_animated(time, x, Vx, Ax, y, Vy, Ay)
        
-regulator = 1000;
+regulator = 1000; % Simplifies the animation. Bigger value => Fewer animation steps
 figure
 
 for i =  1:length(time)/regulator
-     clf
+    clf
+    % Border
     line([-1 7.5], [7 7])
     line([-1 7.5], [-12 -12])
     line([-1 -1],[ -12 7])
