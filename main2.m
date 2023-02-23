@@ -1,0 +1,81 @@
+%%%%%%% EXPERIMENT %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+clc
+clear variables
+close all
+% Description of the system
+% A simulation of a physical system that depicts a simple object the size of a pinball 
+% being launched by a spring. 
+
+% SIMULATION PROPERTIES
+n = 0.0001; % Step-size                                            
+tf = 5; % Simulation time
+
+
+% PHYSICAL PROPERTIES
+% Spring based on Standard (10-148-1)
+k_spring = 75; % Spring constant in N/m . Couldn't find information of the spring constant so this is guess work.
+%equilibrium = 0.14; meters  
+displacement = 0.07; % Contraction in meters
+
+gravity = 9.81; % m/s^2
+fc = 0.2; %   Coefficient of friction. metal on wood (0.2-0.6)
+
+% Object based on a steel ball 
+mass = 0.08; % kilogram 
+object_Fmg = mass*-gravity; 
+%object_Fnormal = mass*gravity;
+%Fb = gravity*mass*fc; % friction, används inte
+radius = 0.0135; % 2.7cm diameter
+% Acceleration m/s^2
+Ax(1) = 0; 
+Ay(1) = 0; 
+% Velocity m/s
+Vx(1) = 0;
+Vy(1) = 0; 
+% Position
+x(1) = 0;
+y(1) = 5;
+% Forces acting on the object
+Fxtot = 0;
+Fytot = 0;
+object = [x(1),y(1),Vx(1),Vy(1),Ax(1),Ay(1), Fxtot, Fytot];
+
+% Obstacle
+% 1 obstacle
+obstacle_radius = 0.1; % meters
+obstacle_pos = [1,4];  % x:(1,1) y:(1,2)
+obstacle_push_vel = 1; % m/s 
+obstacle = [obstacle_radius, obstacle_pos, obstacle_push_vel];
+
+
+% SIMULATION
+for k = 2:(tf/n) 
+    object_Fnormal = 0; % ingen normalkraft
+    Fb=0; % Ingen friktion   
+    
+    % Krafter som påverkar objektet. 
+    Fk = k_spring * displacement; % Hookes law: m*a = k_spring*displacement. 
+    
+    Fxtot = Fk - Fb; % Total force applied to the moving objec
+    Fytot = object_Fmg; 
+    
+    % Collision: Ball and Obstacle.
+    [x(k) ,y(k) ,Vx(k) ,Vy(k)] = collision_object_obstacle(x(k-1),y(k-1),Vx(k-1),Vy(k-1), Ax(k-1), Ay(k-1),n, radius, obstacle_radius, obstacle_pos, obstacle_push_vel);
+
+    Ax(k) = Fxtot/mass; % Objektets acceleration i x-led . 
+    Ay(k) = Fytot/mass; % Objektets acceleration i y-led . 
+   
+        
+    displacement = euler1(displacement, -(Vx(k-1)),n); % displacement håller koll på hur länge fjädern är sammandragen, alltså dess kontakt med massan samt tillförelsen av acceleration&/hastighet. 
+    if displacement < 0
+        displacement = 0;
+    end
+    
+    time(k) = n*(k-1); % En vektor för tiden så att det hela kan plottas.
+end
+
+% Plot figures
+plot_figure(time, x, Vx, Ax, y, Vy, Ay);
+%plot_animated(time, x, Vx, Ax, y, Vy, Ay);

@@ -24,19 +24,22 @@ mass = 0.08; % kilogram
 object_Fmg = mass*-gravity;
 object_Fnormal = mass*gravity;
 Fb = gravity*mass*fc; % funkar inte. Blir negativa hastigheter och allt knasar.
+radius = 0.0135; % 2.7cm diameter
+% Acceleration
+Ax(1) = 0; 
+Ay(1) = object_Fmg + object_Fnormal; 
+% Velocity
+Vx(1) = 0;
+Vy(1) = 0; 
+% Position
+x(1) = 0;
+y(1) = 5; 
 
-
-
-% Begynnelsevilkor
-Ax(1) = 0; % Begynnelsevilkor för objektets acceleration i x-led.
-Ay(1) = object_Fmg + object_Fnormal; % Begynnelsevilkor för objektets acceleration i y-led
-
-Vx(1) = 0; % Begynnelsevilkor för objektets hastighet i x-led.
-Vy(1) = 0; % Begynnelsevilkor för objektets hastighet i y-led
-
-x(1) = 0; % Begynnelsevilkor för objektets x-koordinat.
-y(1) = 5; % Begynnelsevilkor för objektets y-koordinat.
-
+% Obstacle
+% 1 obstacle
+obstacle_radius = 0.1; % meters
+obstacle_pos = [1,5];  % x:(1,1) y:(1,2)
+obstacle_push_vel = 1; % m/s 
 
 % SIMULATION
 for k = 2:(tf/n) 
@@ -85,6 +88,6 @@ for k = 2:(tf/n)
 end
 
 % Plot figures
-plot_figure(time, x, Vx, Ax, y, Vy, Ay);
-%plot_animated(time, x, Vx, Ax, y, Vy, Ay);
+%plot_figure(time, x, Vx, Ax, y, Vy, Ay);
+plot_animated(time, x, Vx, Ax, y, Vy, Ay);
 
